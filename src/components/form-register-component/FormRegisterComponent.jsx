@@ -18,7 +18,6 @@ const FormRegisterComponent = () => {
         try {
             const response = await BackendFetchApi.register(formData);
             console.log('Usuario registrado correctamente:', response);
-            // Aquí podrías redirigir al usuario a otra página, mostrar un mensaje de éxito, etc.
         } catch (error) {
             console.error('Error al registrar usuario:', error);
         }
