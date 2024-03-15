@@ -6,14 +6,22 @@ const BackendFetchApi = {
 
     register: async (userData) => {
         try {
-          const response = await axios.post(`${BACKEND_API_URL}/register`, userData);
-          return response.data;
+            const response = await axios.post(`${BACKEND_API_URL}/register`, userData);
+            return response.data;
         } catch (error) {
-          throw error;
+            throw error;
         }
-      }
+    },
+    login: async (userData) => {
+        try {
+            const response = await axios.post(`${BACKEND_API_URL}/login`, userData);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
 
-}  
+}
 
 
 export default BackendFetchApi;
