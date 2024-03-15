@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackendFetchApi from '../../services/BackendFetchApi';
 
-const FormRegisterComponent = () => {
+const FormRegisterComponent = ({ handleLogin }) => {
 
     const [formData, setFormData] = useState({
         name: '',
@@ -22,6 +22,9 @@ const FormRegisterComponent = () => {
         try {
             const response = await BackendFetchApi.register(formData);
             console.log('Usuario registrado correctamente:', response);
+
+            handleLogin();
+            
             navigate('/');
         } catch (error) {
             console.error('Error al registrar usuario:', error);

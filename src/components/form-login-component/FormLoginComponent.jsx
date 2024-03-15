@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackendFetchApi from '../../services/BackendFetchApi';
 
-const FormLoginComponent = () => {
+const FormLoginComponent = ({ handleLogin }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -21,12 +21,15 @@ const FormLoginComponent = () => {
             const response = await BackendFetchApi.login(formData);
             console.log('Usuario logueado correctamente:', response);
 
+            handleLogin();
+
             navigate('/');
         } catch (error) {
             console.error('Error al loguear usuario:', error);
             setErrorMessage('Error al iniciar sesión. Por favor, verifica tus credenciales.');
         }
     };
+    
     return (
         <div>
             <form onSubmit={handleSubmit} className="max-w-3xl mx-auto rounded-lg p-6 bg-customDark shadow-2xl sm:rounded-3xl dark:border-gray-600 my-7">
