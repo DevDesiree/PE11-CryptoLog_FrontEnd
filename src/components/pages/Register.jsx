@@ -1,9 +1,9 @@
 import React from 'react'
 import FormRegisterComponent from '../form-register-component/FormRegisterComponent'
 
-const Register = () => {
+const Register = ({ handleLogin }) => {
   return (
-    <FormRegisterComponent/>
+    <FormRegisterComponent handleLogin={handleLogin}/>
   )
 }
 
