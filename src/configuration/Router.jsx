@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Register from '../components/pages/Register';
 import Login from '../components/pages/Login';
@@ -10,13 +10,18 @@ const Router = () => {
 
     const handleLogin = () => {
         setIsAuthenticated(true);
-        console.log("Usuario autenticado:", isAuthenticated);
     };
-
+    
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsAuthenticated(true);
+        }
+    }, []);
+    
     const handleLogout = () => {
+        localStorage.removeItem('token');
         setIsAuthenticated(false);
-        console.log("Usuario NO autenticado");
-      
     };
 
     return (
