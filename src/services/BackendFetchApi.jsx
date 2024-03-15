@@ -7,6 +7,7 @@ const BackendFetchApi = {
     register: async (userData) => {
         try {
             const response = await axios.post(`${BACKEND_API_URL}/register`, userData);
+            localStorage.setItem('token', response.data.token);
             return response.data;
         } catch (error) {
             throw error;
@@ -15,6 +16,7 @@ const BackendFetchApi = {
     login: async (userData) => {
         try {
             const response = await axios.post(`${BACKEND_API_URL}/login`, userData);
+            localStorage.setItem('token', response.data.token);
             return response.data;
         } catch (error) {
             throw error;
