@@ -21,11 +21,24 @@ const BackendFetchApi = {
         } catch (error) {
             throw error;
         }
-    }, 
+    },
     userGetProfile: async () => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.get(`${BACKEND_API_URL}/profile`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    userUpdateProfile: async (userData) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.put(`${BACKEND_API_URL}/update-profile`, userData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
