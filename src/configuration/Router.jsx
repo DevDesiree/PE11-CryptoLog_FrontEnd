@@ -28,7 +28,7 @@ const Router = () => {
         <BrowserRouter>
             <NavbarComponent isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home isAuthenticated={isAuthenticated}/>} />
                 <Route path="/register" element={isAuthenticated ? <Home /> : <Register handleLogin={handleLogin}/>} />
                 <Route path="/login" element={isAuthenticated ? <Home /> : <Login handleLogin={handleLogin} />} />
             </Routes>
