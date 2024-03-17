@@ -24,9 +24,9 @@ const NavbarComponent = ({ isAuthenticated, handleLogout }) => {
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
                         {isAuthenticated ? (
                             <>
-                                <li className="block py-2 px-3 text-white  rounded md:bg-transparent  md:p-0 hover:text-blue-500" aria-current="page"><Link to="/historial">Historial</Link></li>
-                                <li className="block py-2 px-3 text-white  rounded md:bg-transparent  md:p-0 hover:text-blue-500" aria-current="page"><Link to="/perfil">Mi Perfil</Link></li>
-                                <li className="block py-2 px-3 text-white  rounded md:bg-transparent  md:p-0 hover:text-blue-500" aria-current="page"><Link to="/activos">Mis Activos</Link></li>
+                                <li className="block py-2 px-3 text-white  rounded md:bg-transparent  md:p-0 hover:text-blue-500" aria-current="page"><Link to="/historical">Historial</Link></li>
+                                <li className="block py-2 px-3 text-white  rounded md:bg-transparent  md:p-0 hover:text-blue-500" aria-current="page"><Link to="/profile">Mi Perfil</Link></li>
+                                <li className="block py-2 px-3 text-white  rounded md:bg-transparent  md:p-0 hover:text-blue-500" aria-current="page"><Link to="/transactions">Mis Activos</Link></li>
                                 <li className="block py-2 px-3 text-white  rounded md:bg-transparent  md:p-0 hover:text-blue-500" aria-current="page">
                                     <button onClick={handleLogout}>Logout</button></li>
                             </>
