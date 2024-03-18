@@ -4,6 +4,7 @@ import Register from '../components/pages/Register';
 import Login from '../components/pages/Login';
 import Home from '../components/pages/Home';
 import UserProfile from '../components/pages/UserProfile';
+import Transactions from '../components/pages/Transactions';
 import NavbarComponent from '../components/navbar-component/NavbarComponent';
 
 const Router = () => {
@@ -33,6 +34,7 @@ const Router = () => {
                 <Route path="/register" element={isAuthenticated ? <Home /> : <Register handleLogin={handleLogin}/>} />
                 <Route path="/login" element={isAuthenticated ? <Home /> : <Login handleLogin={handleLogin} />} />
                 <Route path="/profile" element={<UserProfile isAuthenticated={isAuthenticated} />} />
+                <Route path="/transactions" element={<Transactions isAuthenticated={isAuthenticated} />} />
             </Routes>
         </BrowserRouter>
     );
