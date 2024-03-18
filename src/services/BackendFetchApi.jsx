@@ -73,6 +73,32 @@ const BackendFetchApi = {
         } catch (error) {
             throw error;
         }
+    },
+    updateTransactions: async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.update(`${BACKEND_API_URL}/update-transaction/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    deleteTransactions: async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${BACKEND_API_URL}/delete-transaction/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     }
 
 }
