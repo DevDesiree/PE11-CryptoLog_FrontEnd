@@ -61,10 +61,10 @@ const BackendFetchApi = {
             throw error;
         }
     },
-    createTransactions: async () => {
+    createTransactions: async (userData) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BACKEND_API_URL}/create-transaction`, {
+            const response = await axios.post(`${BACKEND_API_URL}/create-transaction`, userData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
