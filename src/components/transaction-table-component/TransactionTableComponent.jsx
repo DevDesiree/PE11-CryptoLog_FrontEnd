@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BackendFetchApi from '../../services/BackendFetchApi';
 
-const TransactionTableComponent = ({isAuthenticated}) => {
+const TransactionTableComponent = ({ isAuthenticated }) => {
   const [showTable, setShowTable] = useState(true);
   const [transactions, setTransactions] = useState([]);
 
@@ -21,6 +21,15 @@ const TransactionTableComponent = ({isAuthenticated}) => {
 
     fetchTransactions();
   }, []); // Se ejecuta una vez al montar el componente
+
+  const handleDelete = async (id) => {
+    try {
+      await BackendFetchApi.deleteTransactions(id);
+      setTransactions(transactions.filter(transaction => transaction.id !== id));
+    } catch (error) {
+      console.error('Error al eliminar la transacción:', error);
+    }
+  };
 
   return (
     <div>
@@ -74,7 +83,7 @@ const TransactionTableComponent = ({isAuthenticated}) => {
                       <button onClick={() => handleButtonClick(index)} className="bg-green-500 mr-1 hover:bg-red-200 text-white font-bold py-2 px-4 rounded">
                         <i className="fa-solid fa-pen"></i>
                       </button>
-                      <button onClick={() => handleButtonClick(index)} className="bg-red-500 ml-1 hover:bg-red-200 text-white font-bold py-2 px-4 rounded">
+                      <button onClick={() => handleDelete(transaction.id)} className="bg-red-500 ml-1 hover:bg-red-200 text-white font-bold py-2 px-4 rounded">
                         <i className="fa-solid fa-trash"></i>
                       </button>
 
