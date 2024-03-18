@@ -65,7 +65,7 @@ const TransactionTableComponent = ({isAuthenticated}) => {
               <tbody>
                 {transactions.map((transaction, index) => (
                   <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <td className="px-6 py-4">{transaction.created_at}</td>
+                    <td className="px-6 py-4">{transaction.date_buy}</td>
                     <td className="px-6 py-4">{transaction.price_buy}</td>
                     <td className="px-6 py-4">{transaction.quantity}</td>
                     <td className="px-6 py-4">{transaction.amount}</td>
