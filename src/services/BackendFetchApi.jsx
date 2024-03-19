@@ -61,6 +61,19 @@ const BackendFetchApi = {
             throw error;
         }
     },
+    getTransactionsID: async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${BACKEND_API_URL}/transactions/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
     createTransactions: async (userData) => {
         try {
             const token = localStorage.getItem('token');
@@ -74,10 +87,10 @@ const BackendFetchApi = {
             throw error;
         }
     },
-    updateTransactions: async (id) => {
+    updateTransactions: async (id, userData) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.update(`${BACKEND_API_URL}/update-transaction/${id}`, {
+            const response = await axios.put(`${BACKEND_API_URL}/update-transaction/${id}`,userData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
