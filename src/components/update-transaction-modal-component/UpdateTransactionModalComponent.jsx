@@ -74,7 +74,7 @@ const UpdateTransactionModalComponent = ({ transactionId, closeModal, setTransac
                         </div>
                         <div className="mb-5">
                             <label htmlFor="name" className="block mb-2 text-sm font-medium text-white">Nombre</label>
-                            <input type="text" id="name" name="coin_id" value={transactionData.coin_id} onChange={handleChange} className="bg-gray-500 bg-opacity-20 border border-opacity-20 border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bitcoin" required />
+                            <input type="text" id="name" name="coin_id" disabled value={transactionData.coin?.name || ''} onChange={handleChange} className="bg-gray-500 bg-opacity-20 border border-opacity-20 border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bitcoin" required />
                         </div>
                         <div className="mb-5">
                             <label htmlFor="price_buy" className="block mb-2 text-sm font-medium text-white">Precio Compra</label>
