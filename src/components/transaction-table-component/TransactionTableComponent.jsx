@@ -5,7 +5,6 @@ import UpdateTransactionModalComponent from '../update-transaction-modal-compone
 const TransactionTableComponent = ({ isAuthenticated }) => {
   const [showTable, setShowTable] = useState(true);
   const [transactions, setTransactions] = useState([]);
-  // const [selectedTransaction, setSelectedTransaction] = useState(null); 
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [transactionId, setTransactionId] = useState(null);
 
@@ -15,12 +14,12 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
 
   const openModal = (id) => {
     setTransactionId(id);
-    setShowUpdateModal(true); 
+    setShowUpdateModal(true);
   };
 
-const closeModal = () => {
+  const closeModal = () => {
     setTransactionId(null);
-};
+  };
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -35,12 +34,11 @@ const closeModal = () => {
     fetchTransactions();
   }, []); // Se ejecuta una vez al montar el componente
 
-  const handleEdit = (transaction) => {
-    console.log("Transacción seleccionada:", transaction); 
-    // setSelectedTransaction(transaction); 
-    openModal(transaction); 
+  const handleEdit = (id) => {
+    console.log("Transacción seleccionada:", id);
+    openModal(id);
   };
-  
+
   const handleDelete = async (id) => {
     try {
       await BackendFetchApi.deleteTransactions(id);
@@ -123,6 +121,7 @@ const closeModal = () => {
       {showUpdateModal && (
         <UpdateTransactionModalComponent
           transactionId={transactionId}
+          setTransactions={setTransactions}
           closeModal={closeModal}
         />
       )}
