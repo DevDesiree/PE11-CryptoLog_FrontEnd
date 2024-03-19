@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BackendFetchApi from '../../services/BackendFetchApi';
 
-const UpdateTransactionModalComponent = ({ transactionId, closeModal }) => {
+const UpdateTransactionModalComponent = ({ transactionId, closeModal, setTransactions }) => {
     const [transactionData, setTransactionData] = useState({
         coin_id: '',
         price_buy: '',
@@ -46,8 +46,19 @@ const UpdateTransactionModalComponent = ({ transactionId, closeModal }) => {
         try {
             const response = await BackendFetchApi.updateTransactions(transactionId, transactionData);
             console.log('Transacción actualizada correctamente:', response);
+            fetchTransactions();
+            closeModal();
         } catch (error) {
             console.error('Error al actualizar la transacción:', error);
+        }
+    };
+
+    const fetchTransactions = async () => {
+        try {
+            const response = await BackendFetchApi.getTransactions();
+            setTransactions(response);
+        } catch (error) {
+            console.error('Error al obtener las transacciones:', error);
         }
     };
 

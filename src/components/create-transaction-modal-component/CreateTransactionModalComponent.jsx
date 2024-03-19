@@ -41,6 +41,7 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
             const response = await BackendFetchApi.createTransactions(transactionData);
             console.log('Transacción creada correctamente:', response);
             closeModal();
+            window.location.reload();
         } catch (error) {
             console.error('Error al crear la transacción:', error);
         }
