@@ -26,7 +26,19 @@ const UpdateTransactionModalComponent = ({ transactionId, closeModal }) => {
     }, [transactionId]);
 
     const handleChange = (e) => {
-        setTransactionData({ ...transactionData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        let newTransactionData = { ...transactionData, [name]: value };
+
+        if (name === 'quantity' || name === 'price_buy') {
+            const quantity = parseFloat(newTransactionData.quantity);
+            const priceBuy = parseFloat(newTransactionData.price_buy);
+            newTransactionData = {
+                ...newTransactionData,
+                amount: (quantity * priceBuy).toFixed(2),
+            };
+        }
+
+        setTransactionData(newTransactionData);
     };
 
     const handleSubmit = async (e) => {

@@ -4,7 +4,6 @@ import BackendFetchApi from '../../services/BackendFetchApi';
 const CreateTransactionModalComponent = ({ isAuthenticated }) => {
     const [showModal, setShowModal] = useState(false);
     const [transactionData, setTransactionData] = useState({
-        created_at: null,
         coin_id: '',
         price_buy: '',
         quantity: '',
@@ -21,7 +20,19 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
     };
 
     const handleChange = (e) => {
-        setTransactionData({ ...transactionData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        let newTransactionData = { ...transactionData, [name]: value };
+
+        if (name === 'quantity' || name === 'price_buy') {
+            const quantity = parseFloat(newTransactionData.quantity);
+            const priceBuy = parseFloat(newTransactionData.price_buy);
+            newTransactionData = {
+                ...newTransactionData,
+                amount: (quantity * priceBuy).toFixed(2),
+            };
+        }
+
+        setTransactionData(newTransactionData);
     };
 
     const handleSubmit = async (e) => {
@@ -69,10 +80,6 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
                             <label htmlFor="amount" className="block mb-2 text-sm font-medium text-white">Importe</label>
                             <input type="number" id="amount" name="amount" value={transactionData.amount} onChange={handleChange} className="bg-gray-500 bg-opacity-20 border border-opacity-20 border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="20000" required />
                         </div>
-                        {/* <div className="mb-5">
-                        <label htmlFor="actual_price" className="block mb-2 text-sm font-medium text-white">Precio Actual</label>
-                        <input type="number" id="actual_price" name="actual_price" value={transactionData.actual_price} onChange={handleChange} className="bg-gray-500 bg-opacity-20 border border-opacity-20 border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="20000" required />
-                    </div> */}
                         <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-3">
                             <button type="submit" className="text-white bg-gradient-to-r from-indigo-600 from-10% via-blue-500 to-90% to-sky-500 via-60%  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5">Añadir Transacción</button>
                             <button onClick={closeModal} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto">Cancelar</button>
@@ -83,6 +90,5 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
         </div>
     );
 }
-
 
 export default CreateTransactionModalComponent;
