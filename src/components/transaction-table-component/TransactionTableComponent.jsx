@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import BackendFetchApi from '../../services/BackendFetchApi';
+import UpdateTransactionModalComponent from '../update-transaction-modal-component/UpdateTransactionModalComponent';
 
 const TransactionTableComponent = ({ isAuthenticated }) => {
   const [showTable, setShowTable] = useState(true);
   const [transactions, setTransactions] = useState([]);
+  // const [selectedTransaction, setSelectedTransaction] = useState(null); 
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [transactionId, setTransactionId] = useState(null);
 
   const toggleTable = () => {
     setShowTable(!showTable);
   };
+
+  const openModal = (id) => {
+    setTransactionId(id);
+    setShowUpdateModal(true); 
+  };
+
+const closeModal = () => {
+    setTransactionId(null);
+};
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -22,6 +35,12 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
     fetchTransactions();
   }, []); // Se ejecuta una vez al montar el componente
 
+  const handleEdit = (transaction) => {
+    console.log("Transacción seleccionada:", transaction); 
+    // setSelectedTransaction(transaction); 
+    openModal(transaction); 
+  };
+  
   const handleDelete = async (id) => {
     try {
       await BackendFetchApi.deleteTransactions(id);
@@ -80,7 +99,7 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
                     <td className="px-6 py-4">{transaction.amount}</td>
                     <td className="px-6 py-4">{transaction.actual_price}</td>
                     <td className="px-6 py-4">
-                      <button onClick={() => handleButtonClick(index)} className="bg-green-500 mr-1 hover:bg-red-200 text-white font-bold py-2 px-4 rounded">
+                      <button onClick={() => handleEdit(transaction.id)} className="bg-green-500 mr-1 hover:bg-red-200 text-white font-bold py-2 px-4 rounded">
                         <i className="fa-solid fa-pen"></i>
                       </button>
                       <button onClick={() => handleDelete(transaction.id)} className="bg-red-500 ml-1 hover:bg-red-200 text-white font-bold py-2 px-4 rounded">
@@ -99,6 +118,13 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
           <h1>Debes iniciar sesión para ver este contenido.</h1>
           {/* Se podria redirigir a otra vista */}
         </div>
+      )}
+      {/* Bloque para mostrar el modal de actualización */}
+      {showUpdateModal && (
+        <UpdateTransactionModalComponent
+          transactionId={transactionId}
+          closeModal={closeModal}
+        />
       )}
     </div>
 
