@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BackendFetchApi from '../../services/BackendFetchApi';
+import ApiCacheJson from '../../services/ApiCacheJson';
+
 
 const CreateTransactionModalComponent = ({ isAuthenticated }) => {
     const [showModal, setShowModal] = useState(false);
@@ -10,6 +12,20 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
         amount: '',
         date_buy: '',
     });
+
+    const [cryptocurrencies, setCryptocurrencies] = useState([]);
+
+    useEffect(() => {
+        const fetchCryptocurrencies = async () => {
+            try {
+                const response = await ApiCacheJson.getCryptocurrencies();
+                setCryptocurrencies(response);
+            } catch (error) {
+                console.error('Error al cargar las criptomonedas:', error);
+            }
+        };
+        fetchCryptocurrencies();
+    }, []);
 
     const openModal = () => {
         setShowModal(true);
@@ -32,13 +48,24 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
             };
         }
 
+        // if (name === 'coin_id') {
+        //     newTransactionData = {
+        //         ...newTransactionData,
+        //         coin_id: value,
+        //     };
+        // }
+
         setTransactionData(newTransactionData);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
-            const response = await BackendFetchApi.createTransactions(transactionData);
+            const response = await BackendFetchApi.createTransactions({
+                ...transactionData,
+                coin_name: transactionData.coin_id,
+            });
             console.log('Transacción creada correctamente:', response);
             closeModal();
             window.location.reload();
@@ -50,8 +77,8 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
     return (
         <div>
             {isAuthenticated && (
-                <div className="flex justify-end mt-4">
-                    <button onClick={openModal} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <div className="flex justify-center mb-7 mt-7">
+                    <button onClick={openModal} className="text-white bg-gradient-to-r from-indigo-600 from-10% via-blue-500 to-90% to-sky-500 via-60%  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
                         Crear Transacción
                     </button>
                 </div>
@@ -66,8 +93,13 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
                             <input type="date" id="date_buy" name="date_buy" value={transactionData.date_buy} onChange={handleChange} className="bg-gray-500 bg-opacity-20 border border-opacity-20 border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                         </div>
                         <div className="mb-5">
-                            <label htmlFor="name" className="block mb-2 text-sm font-medium text-white">Nombre</label>
-                            <input type="text" id="name" name="coin_id" value={transactionData.name} onChange={handleChange} className="bg-gray-500 bg-opacity-20 border border-opacity-20 border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bitcoin" required />
+                            <label htmlFor="coin_id" className="block mb-2 text-sm font-medium text-white">Nombre</label>
+                            <select name="coin_id" value={transactionData.coin_id} onChange={handleChange} className="bg-gray-500 bg-opacity-20 border border-opacity-20 border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                <option className='bg-customDark' value="">Seleccionar criptomoneda</option>
+                                {cryptocurrencies.map(crypto => (
+                                    <option className='bg-customDark' key={crypto.name} value={crypto.name}>{crypto.name}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className="mb-5">
                             <label htmlFor="price_buy" className="block mb-2 text-sm font-medium text-white">Precio Compra</label>
@@ -83,7 +115,7 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
                         </div>
                         <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-3">
                             <button type="submit" className="text-white bg-gradient-to-r from-indigo-600 from-10% via-blue-500 to-90% to-sky-500 via-60%  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5">Añadir Transacción</button>
-                            <button onClick={closeModal} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto">Cancelar</button>
+                            <button onClick={closeModal} className="text-white bg-gradient-to-r from-pink-600 from-10% via-orange-600 to-90% to-red-400 via-60%  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Cancelar</button>
                         </div>
                     </div>
                 </form>
