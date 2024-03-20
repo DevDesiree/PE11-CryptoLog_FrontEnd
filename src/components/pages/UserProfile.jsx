@@ -67,7 +67,7 @@ const UserProfile = ({ isAuthenticated }) => {
                 </div>
             ) : (
                 <div>
-                    <h1>Debes estar autenticado para ver este contenido.</h1>
+                    <h1>Debes iniciar sesión para ver este contenido.</h1>
                     {/* Se podria redirigir a otra vista */}
                 </div>
             )}

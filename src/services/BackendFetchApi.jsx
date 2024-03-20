@@ -47,6 +47,71 @@ const BackendFetchApi = {
         } catch (error) {
             throw error;
         }
+    },
+    getTransactions: async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${BACKEND_API_URL}/transactions`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    getTransactionsID: async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${BACKEND_API_URL}/transactions/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    createTransactions: async (userData) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${BACKEND_API_URL}/create-transaction`, userData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    updateTransactions: async (id, userData) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.put(`${BACKEND_API_URL}/update-transaction/${id}`,userData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    deleteTransactions: async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${BACKEND_API_URL}/delete-transaction/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     }
 
 }
