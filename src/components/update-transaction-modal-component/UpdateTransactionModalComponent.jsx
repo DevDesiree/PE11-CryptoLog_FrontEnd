@@ -90,7 +90,7 @@ const UpdateTransactionModalComponent = ({ transactionId, closeModal, setTransac
                         </div>
                         <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-3">
                             <button type="submit" className="text-white bg-gradient-to-r from-indigo-600 from-10% via-blue-500 to-90% to-sky-500 via-60%  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5">Actualizar Transacción</button>
-                            <button onClick={closeModal} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto">Cancelar</button>
+                            <button onClick={closeModal} className="text-white bg-gradient-to-r from-pink-600 from-10% via-orange-600 to-90% to-red-400 via-60%  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Cancelar</button>
                         </div>
                     </div>
                 </form>
