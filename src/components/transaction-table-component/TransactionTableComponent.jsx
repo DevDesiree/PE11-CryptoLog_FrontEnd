@@ -30,13 +30,14 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
       try {
         const response = await BackendFetchApi.getTransactions();
         setTransactions(response);
+        
         const coinIds = new Set(response.map(transaction => transaction.coin_id));
         setUniqueCoinIds(coinIds);
       } catch (error) {
         console.error('Error al obtener las transacciones:', error);
       }
     };
-
+  
     fetchTransactions();
   }, []); // Se ejecuta una vez al montar el componente
 
@@ -58,7 +59,7 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
               <div className="relative overflow-x-auto">
                 <div className="text-xl uppercase text-center bg-black text-gray-400 mt-5 px-4 py-1">
                   <button id="dateRangeButton" type="button" className="inline-flex items-center text-white  font-medium hover:underline" onClick={() => toggleDropdown(coinId)}>
-                    {coinId}
+                  {transactions.find(transaction => transaction.coin_id === coinId).coin.name}
                     <svg className="w-3 h-3 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                     </svg>
