@@ -22,6 +22,20 @@ const BackendFetchApi = {
             throw error;
         }
     },
+
+    logout: async () =>{
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${BACKEND_API_URL}/logout`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
     userGetProfile: async () => {
         try {
             const token = localStorage.getItem('token');
