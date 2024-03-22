@@ -23,7 +23,7 @@ const BackendFetchApi = {
         }
     },
 
-    logout: async () =>{
+    logout: async () => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(`${BACKEND_API_URL}/logout`, {}, {
@@ -104,7 +104,7 @@ const BackendFetchApi = {
     updateTransactions: async (id, userData) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.put(`${BACKEND_API_URL}/update-transaction/${id}`,userData, {
+            const response = await axios.put(`${BACKEND_API_URL}/update-transaction/${id}`, userData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -126,7 +126,20 @@ const BackendFetchApi = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+    fetchHistoricals: async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${BACKEND_API_URL}/historicals`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
 
 }
 

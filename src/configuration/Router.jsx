@@ -7,6 +7,7 @@ import UserProfile from '../components/pages/UserProfile';
 import Transactions from '../components/pages/Transactions';
 import NavbarComponent from '../components/navbar-component/NavbarComponent';
 import BackendFetchApi from '../services/BackendFetchApi';
+import HistoricalPage from '../components/pages/HistoricalPage';
 
 const Router = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,6 +45,7 @@ const Router = () => {
                 <Route path="/login" element={isAuthenticated ? <Home /> : <Login handleLogin={handleLogin} />} />
                 <Route path="/profile" element={<UserProfile isAuthenticated={isAuthenticated} />} />
                 <Route path="/transactions" element={<Transactions isAuthenticated={isAuthenticated} />} />
+                <Route path="/historical" element={<HistoricalPage isAuthenticated={isAuthenticated} />} />
             </Routes>
         </BrowserRouter>
     );
