@@ -11,6 +11,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [favorites, setFavorites] = useState([]);
     const [cryptoData, setCryptoData] = useState([]);
+    const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
 
     const handleChange = (e) => {
         setSearchTerm(e.target.value);
@@ -67,8 +68,14 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
     }, [isAuthenticated]);
 
     const filteredCryptoData = cryptoData.filter((crypto) => {
-        return crypto.name.toLowerCase().includes(searchTerm.toLowerCase()) || crypto.symbol.toLowerCase().includes(searchTerm.toLowerCase());
+        const isInFavorites = favorites.includes(crypto.id);
+        return (!showOnlyFavorites || isInFavorites) &&
+            (crypto.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                crypto.symbol.toLowerCase().includes(searchTerm.toLowerCase()));
     });
+    const handleShowOnlyFavoritesToggle = () => {
+        setShowOnlyFavorites(prevState => !prevState);
+    };
 
     return (
         <>
@@ -86,7 +93,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
 
                 </div>
                 <div className='flex items-center'>
-                    <a href="#" className="text-blue-500 hover:text-blue-600 flex items-center">
+                    <a href="#" className="text-blue-500 hover:text-blue-600 flex items-center" onClick={handleShowOnlyFavoritesToggle}>
                         {iconFavorite}
                         Mostrar Solo Favoritos
                     </a>
