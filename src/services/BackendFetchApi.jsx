@@ -141,6 +141,48 @@ const BackendFetchApi = {
         }
     },
 
+    getFavoriteCoin: async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${BACKEND_API_URL}/favorite-coins`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    addFavoriteCoin: async (coinId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${BACKEND_API_URL}/favorite-coins`, { coin_name: coinId }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    
+    removeFavoriteCoin: async (coinId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${BACKEND_API_URL}/favorite-coins/${coinId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+    
 }
 
 
