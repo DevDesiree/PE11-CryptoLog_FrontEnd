@@ -143,7 +143,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                                     {crypto.symbol.toUpperCase()}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {crypto.current_price}$
+                                    {crypto.current_price.toLocaleString()}€
                                 </td>
                             </tr>
                         ))}
