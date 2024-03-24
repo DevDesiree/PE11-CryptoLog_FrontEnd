@@ -1,16 +1,25 @@
 import React, { useEffect } from 'react';
 import ApiCacheJson from '../../services/ApiCacheJson';
+import Alerts from "../alerts-component/Alerts";
 
 const BtnUpdateApiComponent = ({ isAuthenticated }) => {
 
+    const sweetAlert = Alerts();
+
     const updateCryptocurrencies = async () => {
         try {
+            sweetAlert.showLoadingAlert("Actualizando Criptomonedas", "Por favor, espere...");
             const response = await ApiCacheJson.updateCryptocurrencies();
-            window.location.reload();
+            sweetAlert.showSuccessAlert("¡Actualización exitosa!", "Las criptomonedas han sido actualizadas correctamente.");
+            
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+            
             console.log(response);
-        } catch (error) {
-            console.error('Error al cargar las criptomonedas:', error);
-        }
+          } catch (error) {
+            sweetAlert.showErrorAlert("Error!" , "Hubo un problema al actualizar las criptomonedas. Por favor, inténtelo de nuevo más tarde.")
+          }
     };
     return (
         <button

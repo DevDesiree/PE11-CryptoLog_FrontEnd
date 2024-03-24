@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BackendFetchApi from '../../services/BackendFetchApi';
+import Alerts from "../alerts-component/Alerts";
 
 const UserProfile = ({ isAuthenticated }) => {
     const [userData, setUserData] = useState({
@@ -7,6 +8,8 @@ const UserProfile = ({ isAuthenticated }) => {
         email: '',
         avatar: null
     });
+
+    const sweetAlert = Alerts();
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -29,12 +32,12 @@ const UserProfile = ({ isAuthenticated }) => {
         const { name, value, files } = e.target;
         if (files && files.length > 0) {
             const selectedFile = files[0];
-    
+
             // Lee el archivo seleccionado y obtiene su URL
             const reader = new FileReader();
-            reader.onload = function(event) {
+            reader.onload = function (event) {
                 const fileUrl = event.target.result;
-    
+
                 // Actualiza el estado con la URL del archivo
                 setUserData(prevState => ({
                     ...prevState,
@@ -43,7 +46,7 @@ const UserProfile = ({ isAuthenticated }) => {
                 }));
             };
             reader.readAsDataURL(selectedFile); // Lee el archivo como una URL de datos
-    
+
         } else {
             setUserData(prevState => ({
                 ...prevState,
@@ -51,18 +54,22 @@ const UserProfile = ({ isAuthenticated }) => {
             }));
         }
     };
-    
-    
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
+            sweetAlert.showLoadingAlert("Espera", "Subiendo Imagen", 1000)
             const response = await BackendFetchApi.userUpdateProfile(userData);
-            console.log('Perfil actualizado correctamente:', response);
+            console.log("Perfil actualizado correctamente:", response);
+
+            sweetAlert.showSuccessAlert("Perfil actualizado", "¡El perfil ha sido actualizado exitosamente!");
         } catch (error) {
-            console.error('Error al actualizar el perfil del usuario:', error);
+            console.error("Error al actualizar el perfil del usuario:", error);
         }
     };
-    
+
     return (
         <div>
             {isAuthenticated ? (

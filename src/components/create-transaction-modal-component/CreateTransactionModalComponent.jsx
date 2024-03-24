@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BackendFetchApi from '../../services/BackendFetchApi';
 import ApiCacheJson from '../../services/ApiCacheJson';
+import Alerts from "../alerts-component/Alerts";
 
 
 const CreateTransactionModalComponent = ({ isAuthenticated }) => {
@@ -14,6 +15,7 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
     });
 
     const [cryptocurrencies, setCryptocurrencies] = useState([]);
+    const sweetAlert = Alerts();
 
     useEffect(() => {
         const fetchCryptocurrencies = async () => {
@@ -55,13 +57,17 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
         e.preventDefault();
 
         try {
+            sweetAlert.showSuccessAlertTop("Creando Transacción", "Por favor, espere...");
             const response = await BackendFetchApi.createTransactions({
                 ...transactionData,
                 coin_name: transactionData.coin_id,
             });
             console.log('Transacción creada correctamente:', response);
             closeModal();
-            window.location.reload();
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         } catch (error) {
             console.error('Error al crear la transacción:', error);
         }
