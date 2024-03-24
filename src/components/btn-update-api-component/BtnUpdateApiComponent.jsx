@@ -14,7 +14,7 @@ const BtnUpdateApiComponent = ({ isAuthenticated }) => {
     };
     return (
         <button
-            className={`text-white bg-gradient-to-r from-indigo-600 from-10% via-blue-500 to-90% to-sky-500 via-60% hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${!isAuthenticated ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`text-white bg-gradient-to-r from-indigo-600 from-10% via-blue-500 to-90% to-sky-500 via-60% hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mt-4 px-5 py-2.5 text-center ${!isAuthenticated ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={updateCryptocurrencies}
             disabled={!isAuthenticated}
             title={!isAuthenticated ? 'Debes iniciar sesión para actualizar datos' : ''}

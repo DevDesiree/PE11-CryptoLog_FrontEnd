@@ -62,7 +62,7 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
     };
 
     fetchTransactions();
-  }, []); // Se ejecuta una vez al montar el componente
+  }, []); 
 
   const handleDelete = async (id) => {
     try {
@@ -139,11 +139,10 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
                             <td className="px-6 py-4">{transaction.price_buy.toLocaleString()}€</td>
                             <td className="px-6 py-4">{transaction.quantity}</td>
                             <td className="px-6 py-4">{transaction.amount.toLocaleString()}€</td>
-                            <td className="px-6 py-4">{coinPrices[coinId].toLocaleString()}€</td>
+                            <td className="px-6 py-4">{coinPrices[coinId]}€</td>
                             <td >
                               {calcPercentage(transaction.quantity, transaction.amount, coinPrices[coinId])}
                             </td>
-
 
                             <td className="px-6 py-4">
                               <button onClick={() => openModal(transaction.id)} className="bg-green-500 mr-1 hover:bg-red-200 text-white font-bold py-2 px-4 rounded">

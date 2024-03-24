@@ -51,7 +51,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
         };
 
         fetchCryptocurrencies();
-    }, []); // Se ejecuta solo una vez al montar el componente
+    }, []);
 
     useEffect(() => {
         const fetchUserFavorites = async () => {
@@ -80,21 +80,21 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
 
     return (
         <>
-            <div className="flex mb-5 items-center justify-evenly">
+            <div className="flex flex-col sm:flex-row mb-5 items-center justify-evenly">
                 <BtnUpdateApiComponent isAuthenticated={isAuthenticated} />
                 <div className='flex'>
                     <label htmlFor="default-search" className="mb-2 text-sm font-medium sr-only text-white">Search</label>
                     <div className="relative">
                         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <svg className="w-4 h-4 text-gray-500 mt-4 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input type="search" id="default-search" value={searchTerm} onChange={handleChange} className="block w-full p-4 ps-10 text-sm border rounded-lg bg-gray-700 border-gray-600 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 text-white" placeholder="Buscar por Nombre o Siglas" required />
+                        <input type="search" id="default-search" value={searchTerm} onChange={handleChange} className="block sm:w-auto mt-4 w-full p-4 ps-10 text-sm border rounded-lg bg-gray-700 border-gray-600 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 text-white" placeholder="Buscar por Nombre o Siglas" required />
                     </div>
                 </div>
                 <div className='flex items-center'>
-                    <a href="#" className="text-blue-500 hover:text-blue-600 flex items-center" onClick={handleShowOnlyFavoritesToggle}>
+                    <a href="#" className="text-blue-500 mt-4 hover:text-blue-600 flex items-center" onClick={handleShowOnlyFavoritesToggle}>
                         {iconFavorite}
                         Mostrar Solo Favoritos
                     </a>
@@ -102,8 +102,8 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
 
             </div>
             <div className="relative overflow-x-auto">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className="w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400  text-center">
+                    <thead className="text-xs uppercase bg-gray-700 dark:text-gray-200">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 Favorito
@@ -127,7 +127,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                     </thead>
                     <tbody>
                         {filteredCryptoData.map((crypto) => (
-                            <tr key={crypto.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <tr key={crypto.id} className="border-b bg-gray-800 border-gray-700 text-white">
                                 <td className="px-6 py-4">
                                     <div>
                                         <form onSubmit={(e) => handleFavoriteSubmit(e, crypto.id)}>
@@ -137,7 +137,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                                         </form>
                                     </div>
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 flex justify-center">
                                     <img src={crypto.image} alt={crypto.name} className="w-8 h-8" />
                                 </td>
                                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -152,9 +152,9 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                                 <td className="px-6 py-4">
                                     {crypto.current_price.toLocaleString()}€
                                     {crypto.current_price > (crypto.high_24h + crypto.low_24h) / 2 ? (
-                                        <span className="text-green-500" style={{ fontSize: '1.5em' }}> &#8593;</span> // Flecha hacia arriba si el precio es mayor que la media
+                                        <span className="text-green-500" style={{ fontSize: '1.5em' }}> &#8593;</span> 
                                     ) : (
-                                        <span className="text-red-500" style={{ fontSize: '1.5em' }}> &#8595;</span> // Flecha hacia abajo si el precio es menor que la media
+                                        <span className="text-red-500" style={{ fontSize: '1.5em' }}> &#8595;</span> 
                                     )}
                                 </td>
                             </tr>
