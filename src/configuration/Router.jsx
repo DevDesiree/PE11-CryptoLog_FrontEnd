@@ -29,7 +29,7 @@ const Router = () => {
             if (response) {
                 setIsAuthenticated(false);
                 localStorage.removeItem('token');
-                 console.log(response.message);
+                window.location.href = '/';
             }
         } catch (error) {
             console.error('Error al cerrar sesión:', error);
