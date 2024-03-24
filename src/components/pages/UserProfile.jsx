@@ -68,7 +68,7 @@ const UserProfile = ({ isAuthenticated }) => {
             {isAuthenticated ? (
                 <div>
                     <h1 className="text-center text-3xl text-white rounded-lg p-6 ">Editar Mi Perfil</h1>
-                    <form onSubmit={handleSubmit} className="max-w-5xl mx-auto rounded-lg p-6  shadow-2xl sm:rounded-3xl border-gray-600 my-7 flex flex-col items-center">
+                    <form onSubmit={handleSubmit} className="max-w-5xl mx-auto rounded-lg p-6 bg-gray-800 shadow-2xl sm:rounded-3xl border-gray-600 my-7 flex flex-col items-center">
                         <div className="flex flex-col sm:flex-row w-full">
                             <div className="flex flex-col w-full sm:w-1/2 pr-10 items-center mb-8 sm:mb-0">
                                 <h2 className="text-center text-xl text-white mb-5">Tu Avatar</h2>
@@ -89,13 +89,12 @@ const UserProfile = ({ isAuthenticated }) => {
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" className="text-white bg-gradient-to-r from-indigo-600 from-10% via-blue-500 to-90% to-sky-500 via-60% hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3.5 mt-5">Actualizar</button>
+                        <button type="submit" className="text-white bg-gradient-to-r from-indigo-600 from-10% via-blue-500 to-90% to-sky-500 via-60% hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3.5 mt-5">Actualizar Perfil</button>
                     </form>
                 </div>
             ) : (
                 <div>
-                    <h1>Debes iniciar sesión para ver este contenido.</h1>
-                    {/* Se podria redirigir a otra vista */}
+                    <h1 className='text-center text-4xl bg-red-500'>Debes iniciar sesión para ver este contenido.</h1>
                 </div>
             )}
         </div>
