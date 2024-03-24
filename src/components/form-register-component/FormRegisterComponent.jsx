@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackendFetchApi from '../../services/BackendFetchApi';
+import Alerts from "../alerts-component/Alerts";
+
 
 const FormRegisterComponent = ({ handleLogin }) => {
 
@@ -12,6 +14,7 @@ const FormRegisterComponent = ({ handleLogin }) => {
     });
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const sweetAlert = Alerts();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,19 +24,25 @@ const FormRegisterComponent = ({ handleLogin }) => {
         e.preventDefault();
         try {
             const response = await BackendFetchApi.register(formData);
-            console.log('Usuario registrado correctamente:', response);
-    
-            handleLogin();
+            console.log("Usuario registrado correctamente:", response);
             
-            navigate('/');
-        } catch (error) {
-            console.error('Error al registrar usuario:', error);
+            sweetAlert.showSuccessAlert("¡Registro exitoso!", "El usuario ha sido registrado correctamente.");
+            
+            // Esperar 2 segundos antes de navegar a la página principal
+            setTimeout(() => {
+              handleLogin();
+              navigate("/");
+            }, 1000);
+
+          } catch (error) {
+            console.error("Error al registrar usuario:", error);
+            
             if (error.response && error.response.data && error.response.data.error) {
-                setErrorMessage(error.response.data.error);
+              setErrorMessage(error.response.data.error);
             } else {
-                setErrorMessage('Error al registrarte. Por favor, verifica que los campos estén correctos.');
+              setErrorMessage("Error al registrarte. Por favor, verifica que los campos estén correctos.");
             }
-        }
+          }
     };
     
     return (

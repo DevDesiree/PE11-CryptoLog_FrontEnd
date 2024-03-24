@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackendFetchApi from '../../services/BackendFetchApi';
+import Alerts from "../alerts-component/Alerts";
 
 const FormLoginComponent = ({ handleLogin }) => {
     const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const FormLoginComponent = ({ handleLogin }) => {
 
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const sweetAlert = Alerts();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +25,12 @@ const FormLoginComponent = ({ handleLogin }) => {
 
             handleLogin();
 
-            navigate('/');
+            sweetAlert.showSuccessAlert("Inicio de sesión exitoso", "¡Bienvenido!");
+
+            setTimeout(() => {
+              navigate("/");
+            }, 2000);
+
         } catch (error) {
             console.error('Error al loguear usuario:', error);
             setErrorMessage('Error al iniciar sesión. Por favor, verifica tus credenciales.');

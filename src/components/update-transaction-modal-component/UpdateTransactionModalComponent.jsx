@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BackendFetchApi from '../../services/BackendFetchApi';
+import Alerts from "../alerts-component/Alerts";
 
 const UpdateTransactionModalComponent = ({ transactionId, closeModal, setTransactions }) => {
     const [transactionData, setTransactionData] = useState({
@@ -25,6 +26,8 @@ const UpdateTransactionModalComponent = ({ transactionId, closeModal, setTransac
         }
     }, [transactionId]);
 
+    const sweetAlert = Alerts();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         let newTransactionData = { ...transactionData, [name]: value };
@@ -43,15 +46,24 @@ const UpdateTransactionModalComponent = ({ transactionId, closeModal, setTransac
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
         try {
-            const response = await BackendFetchApi.updateTransactions(transactionId, transactionData);
-            console.log('Transacción actualizada correctamente:', response);
+          sweetAlert.showLoadingAlert("Actualizando Transacción", "Por favor, espere...");
+    
+          const response = await BackendFetchApi.updateTransactions(transactionId, transactionData);
+    
+          console.log("Transacción actualizada correctamente:", response);
+    
+          setTimeout(() => {
             fetchTransactions();
             closeModal();
+            sweetAlert.showSuccessAlert("¡Actualizado!", "La transacción ha sido actualizada exitosamente.");
+          }, 1000);
+          
         } catch (error) {
-            console.error('Error al actualizar la transacción:', error);
+          console.error("Error al actualizar la transacción:", error);
         }
-    };
+      };
 
     const fetchTransactions = async () => {
         try {

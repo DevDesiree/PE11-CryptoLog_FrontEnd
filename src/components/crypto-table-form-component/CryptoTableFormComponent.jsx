@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ApiCacheJson from '../../services/ApiCacheJson';
 import BackendFetchApi from '../../services/BackendFetchApi';
 import BtnUpdateApiComponent from '../btn-update-api-component/BtnUpdateApiComponent';
+import Alerts from "../alerts-component/Alerts";
 
 const CryptoTableFormComponent = ({ isAuthenticated }) => {
 
@@ -17,6 +18,8 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
     const handleChange = (e) => {
         setSearchTerm(e.target.value);
     };
+
+    const sweetAlert = Alerts();
 
     const handleFavoriteSubmit = async (e, id) => {
         e.preventDefault();
@@ -37,7 +40,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                 console.error('Error al agregar/eliminar moneda favorita:', error);
             }
         } else {
-            alert('Por favor inicia sesión para agregar criptomonedas a favoritos.');
+            sweetAlert.showErrorAlert("Error!" ,"Por favor inicia sesión para agregar criptomonedas a favoritos.")
         }
     };
     useEffect(() => {

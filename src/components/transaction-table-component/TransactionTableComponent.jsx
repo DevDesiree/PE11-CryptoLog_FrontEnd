@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BackendFetchApi from '../../services/BackendFetchApi';
 import ApiCacheJson from '../../services/ApiCacheJson';
 import UpdateTransactionModalComponent from '../update-transaction-modal-component/UpdateTransactionModalComponent';
+import Alerts from "../alerts-component/Alerts";
 
 const TransactionTableComponent = ({ isAuthenticated }) => {
   const [dropdownOpen, setDropdownOpen] = useState({});
@@ -10,6 +11,8 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
   const [transactionId, setTransactionId] = useState(null);
   const [uniqueCoinIds, setUniqueCoinIds] = useState(new Set());
   const [coinPrices, setCoinPrices] = useState({});
+
+  const sweetAlert = Alerts();
 
   const toggleDropdown = (coinId) => {
     setDropdownOpen(prevState => ({
@@ -66,10 +69,19 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
 
   const handleDelete = async (id) => {
     try {
-      await BackendFetchApi.deleteTransactions(id);
-      setTransactions(transactions.filter(transaction => transaction.id !== id));
+      const confirmed = await sweetAlert.showConfirmationAlert(
+        "¿Estás seguro?",
+        "¡No podrás revertir esta acción!",
+        "Sí, eliminar"
+      );
+
+      if (confirmed) {
+        await BackendFetchApi.deleteTransactions(id);
+        setTransactions(transactions.filter((transaction) => transaction.id !== id));
+        sweetAlert.showSuccessAlert("¡Eliminado!", "La transacción ha sido eliminada exitosamente.");
+      }
     } catch (error) {
-      console.error('Error al eliminar la transacción:', error);
+      console.error("Error al eliminar la transacción:", error);
     }
   };
 
