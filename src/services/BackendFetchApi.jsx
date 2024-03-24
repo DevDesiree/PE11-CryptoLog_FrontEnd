@@ -52,7 +52,14 @@ const BackendFetchApi = {
     userUpdateProfile: async (userData) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.put(`${BACKEND_API_URL}/update-profile`, userData, {
+            const formData = new FormData();
+            formData.append('name', userData.name); 
+            formData.append('email', userData.email); 
+            if (userData.avatar) {
+                formData.append('avatar', userData.avatar); 
+            }
+    
+            const response = await axios.post(`${BACKEND_API_URL}/update-profile`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
