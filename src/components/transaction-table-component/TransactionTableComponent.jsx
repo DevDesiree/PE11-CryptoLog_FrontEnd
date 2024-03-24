@@ -53,9 +53,7 @@ const TransactionTableComponent = ({ isAuthenticated }) => {
         const coinPricesData = {};
         for (const coinId of coinIds) {
           const coinName = response.find(transaction => transaction.coin_id === coinId).coin.name;
-          console.log(coinName);
           const price = await fetchCoinPrice(coinName);
-          console.log(price);
           coinPricesData[coinId] = price;
         }
         setCoinPrices(coinPricesData);
