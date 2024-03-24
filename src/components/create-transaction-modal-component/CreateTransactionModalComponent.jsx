@@ -48,13 +48,6 @@ const CreateTransactionModalComponent = ({ isAuthenticated }) => {
             };
         }
 
-        // if (name === 'coin_id') {
-        //     newTransactionData = {
-        //         ...newTransactionData,
-        //         coin_id: value,
-        //     };
-        // }
-
         setTransactionData(newTransactionData);
     };
 
