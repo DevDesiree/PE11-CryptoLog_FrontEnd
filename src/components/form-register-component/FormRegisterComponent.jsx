@@ -22,16 +22,20 @@ const FormRegisterComponent = ({ handleLogin }) => {
         try {
             const response = await BackendFetchApi.register(formData);
             console.log('Usuario registrado correctamente:', response);
-
+    
             handleLogin();
             
             navigate('/');
         } catch (error) {
             console.error('Error al registrar usuario:', error);
-            setErrorMessage('Error al registrarte Por favor, verifica que los campos estén correctos.');
+            if (error.response && error.response.data && error.response.data.error) {
+                setErrorMessage(error.response.data.error);
+            } else {
+                setErrorMessage('Error al registrarte. Por favor, verifica que los campos estén correctos.');
+            }
         }
     };
-
+    
     return (
         <div>
             <form onSubmit={handleSubmit} className="max-w-3xl mx-auto rounded-lg p-6 bg-customDark shadow-2xl sm:rounded-3xl dark:border-gray-600 my-7">
