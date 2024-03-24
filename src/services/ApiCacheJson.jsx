@@ -14,7 +14,7 @@ const ApiCacheJson = {
     updateCryptocurrencies: async () => {
         try {
             const response = await axios.get(`${BACKEND_API_URL}/updateJson`);
-            return response.data;
+            return response;
         } catch (error) {
             throw error;
         }

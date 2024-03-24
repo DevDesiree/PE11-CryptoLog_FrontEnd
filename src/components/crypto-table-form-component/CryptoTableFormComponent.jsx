@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ApiCacheJson from '../../services/ApiCacheJson';
 import BackendFetchApi from '../../services/BackendFetchApi';
+import BtnUpdateApiComponent from '../btn-update-api-component/BtnUpdateApiComponent';
 
 const CryptoTableFormComponent = ({ isAuthenticated }) => {
 
@@ -80,6 +81,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
     return (
         <>
             <div className="flex mb-5 items-center justify-evenly">
+                <BtnUpdateApiComponent isAuthenticated={isAuthenticated} />
                 <div className='flex'>
                     <label htmlFor="default-search" className="mb-2 text-sm font-medium sr-only text-white">Search</label>
                     <div className="relative">
@@ -90,7 +92,6 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                         </div>
                         <input type="search" id="default-search" value={searchTerm} onChange={handleChange} className="block w-full p-4 ps-10 text-sm border rounded-lg bg-gray-700 border-gray-600 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 text-white" placeholder="Buscar por Nombre o Siglas" required />
                     </div>
-
                 </div>
                 <div className='flex items-center'>
                     <a href="#" className="text-blue-500 hover:text-blue-600 flex items-center" onClick={handleShowOnlyFavoritesToggle}>
@@ -105,10 +106,13 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3">
+                                Favorito
+                            </th>
+                            <th scope="col" className="px-6 py-3">
                                 Icono
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                #
+                                Rank
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Nombre
@@ -133,6 +137,9 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                                         </form>
                                     </div>
                                 </td>
+                                <td className="px-6 py-4">
+                                    <img src={crypto.image} alt={crypto.name} className="w-8 h-8" />
+                                </td>
                                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {crypto.market_cap_rank}
                                 </td>
@@ -144,6 +151,11 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                                 </td>
                                 <td className="px-6 py-4">
                                     {crypto.current_price.toLocaleString()}€
+                                    {crypto.current_price > (crypto.high_24h + crypto.low_24h) / 2 ? (
+                                        <span className="text-green-500" style={{ fontSize: '1.5em' }}> &#8593;</span> // Flecha hacia arriba si el precio es mayor que la media
+                                    ) : (
+                                        <span className="text-red-500" style={{ fontSize: '1.5em' }}> &#8595;</span> // Flecha hacia abajo si el precio es menor que la media
+                                    )}
                                 </td>
                             </tr>
                         ))}
