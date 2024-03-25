@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ApiCacheJson from '../../services/ApiCacheJson';
 import BackendFetchApi from '../../services/BackendFetchApi';
 import BtnUpdateApiComponent from '../btn-update-api-component/BtnUpdateApiComponent';
+import PaginationComponent from '../pagination-component/PaginationComponent';
 import Alerts from "../alerts-component/Alerts";
 
 const CryptoTableFormComponent = ({ isAuthenticated }) => {
@@ -14,7 +15,16 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
     const [favorites, setFavorites] = useState([]);
     const [cryptoData, setCryptoData] = useState([]);
     const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [perPage] = useState(50);
 
+    const totalItems = cryptoData.length;
+    const indexOfLast = currentPage * perPage;
+    const indexOfFirst = indexOfLast - perPage;
+    
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
     const handleChange = (e) => {
         setSearchTerm(e.target.value);
     };
@@ -40,7 +50,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                 console.error('Error al agregar/eliminar moneda favorita:', error);
             }
         } else {
-            sweetAlert.showErrorAlert("Error!" ,"Por favor inicia sesión para agregar criptomonedas a favoritos.")
+            sweetAlert.showErrorAlert("Error!", "Por favor inicia sesión para agregar criptomonedas a favoritos.")
         }
     };
     useEffect(() => {
@@ -60,6 +70,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
         const fetchUserFavorites = async () => {
             try {
                 const userFavorites = await BackendFetchApi.getFavoriteCoin();
+                setCurrentPage(1);
                 setFavorites(userFavorites);
             } catch (error) {
                 console.error('Error al obtener los favoritos del usuario:', error);
@@ -80,6 +91,9 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
     const handleShowOnlyFavoritesToggle = () => {
         setShowOnlyFavorites(prevState => !prevState);
     };
+
+    const index = filteredCryptoData.slice(indexOfFirst, indexOfLast);
+
 
     return (
         <>
@@ -129,7 +143,7 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredCryptoData.map((crypto) => (
+                        {index.map((crypto) => (
                             <tr key={crypto.id} className="border-b bg-gray-800 border-gray-700 text-white">
                                 <td className="px-6 py-4">
                                     <div>
@@ -155,15 +169,23 @@ const CryptoTableFormComponent = ({ isAuthenticated }) => {
                                 <td className="px-6 py-4">
                                     {crypto.current_price.toLocaleString()}€
                                     {crypto.current_price > (crypto.high_24h + crypto.low_24h) / 2 ? (
-                                        <span className="text-green-500" style={{ fontSize: '1.5em' }}> &#8593;</span> 
+                                        <span className="text-green-500" style={{ fontSize: '1.5em' }}> &#8593;</span>
                                     ) : (
-                                        <span className="text-red-500" style={{ fontSize: '1.5em' }}> &#8595;</span> 
+                                        <span className="text-red-500" style={{ fontSize: '1.5em' }}> &#8595;</span>
                                     )}
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <div className="flex justify-center mt-4">
+                    <PaginationComponent
+                        currentPage={currentPage}
+                        perPage={perPage}
+                        totalItems={totalItems}
+                        onPageChange={handlePageChange}
+                    />
+                </div>
             </div>
         </>
     )
