@@ -28,7 +28,6 @@ const FormRegisterComponent = ({ handleLogin }) => {
             
             sweetAlert.showSuccessAlert("¡Registro exitoso!", "El usuario ha sido registrado correctamente.");
             
-            // Esperar 2 segundos antes de navegar a la página principal
             setTimeout(() => {
               handleLogin();
               navigate("/");
