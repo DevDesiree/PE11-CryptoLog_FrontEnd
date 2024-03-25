@@ -54,7 +54,7 @@ npm run dev
 Esto iniciará el servidor de desarrollo. Abre tu navegador y ve a http://localhost:5173 para ver la aplicación.
 
 > [!IMPORTANT]  
-> Recuerda que tambien necesitas tener el servidor del backEnd activo, (Link al readme del backend)
+> Recuerda que tambien necesitas tener el servidor del backEnd activo, [Link al readme del backend](https://github.com/DevDesiree/PE11-CryptoLog_BackEnd/blob/main/README.md)
 
 
 ## 📕 Cómo usar CryptoLog
